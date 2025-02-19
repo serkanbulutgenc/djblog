@@ -19,14 +19,6 @@ DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 CACHES = {'default': env.cache_url('CACHE_URL')}
 
-STORAGES = {
-    'default': {'BACKEND': 'django.core.files.storage.FilesystemStorage'},
-    #'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'},
-    'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
-    },
-}
-
 THIRD_PARTY_APPS += ('debug_toolbar', 'apps.home.apps.HomeConfig')
 
 INSTALLED_APPS += THIRD_PARTY_APPS

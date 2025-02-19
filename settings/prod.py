@@ -11,11 +11,6 @@ DEBUG = env('DEBUG', default=True)
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS', cast=list)
 
-INTERNAL_IPS = ['127.0.0.1']
-
-
-CACHES = {'default': env.cache_url('CACHE_URL')}
-
 DATABASES = {
     'default': env.db(),
 }

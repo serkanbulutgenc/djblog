@@ -11,6 +11,7 @@ DEBUG = env('DEBUG', default=True)
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS', cast=list)
 
+
 DATABASES = {
     'default': env.db(),
 }
@@ -20,6 +21,7 @@ CACHES = {
     # read os.environ['REDIS_URL']
     'default': env.cache_url('REDIS_URL')
 }
+
 
 THIRD_PARTY_APPS += ('apps.home.apps.HomeConfig',)
 

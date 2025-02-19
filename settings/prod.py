@@ -20,3 +20,7 @@ CACHES = {
     # read os.environ['REDIS_URL']
     'default': env.cache_url('REDIS_URL')
 }
+
+THIRD_PARTY_APPS += ('apps.home.apps.HomeConfig',)
+
+INSTALLED_APPS += THIRD_PARTY_APPS

@@ -12,7 +12,7 @@ jobs:
     env:
       SECRET_KEY: django-insecure-l07di_ji)%+7486q86^-eya9a7975j19)@imo5)!#1)lkh*pcg
       ALLOWED_HOSTS: localhost,127.0.0.1
-      SQLITE_URL: sqlite///db.sqlite3
+      SQLITE_URL: sqlite:///db.sqlite3
       CACHE_URL: pymemcache://127.0.0.1:11211,127.0.0.1:11212,127.0.0.1:11213
 
     runs-on: ubuntu-latest

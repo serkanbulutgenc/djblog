@@ -9,15 +9,19 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG', default=True)
 
-ALLOWED_HOSTS = env('ALLOWED_HOSTS', cast=list)
+ALLOWED_HOSTS = env('ALLOWED_HOSTS', default='127.0.0.1, localhost', cast=list)
 
-INTERNAL_IPS = ['127.0.0.1']
+INTERNAL_IPS = ['127.0.0.1', 'localhost']
 
 DATABASES = {'default': env.db_url('SQLITE_URL', default='sqlite:///db.sqlite3')}
 
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
-CACHES = {'default': env.cache_url('CACHE_URL')}
+CACHES = {
+    'default': env.cache_url(
+        'CACHE_URL', default='pymemcache://127.0.0.1:11211,127.0.0.1:11212,127.0.0.1:11213'
+    )
+}
 
 THIRD_PARTY_APPS += ('debug_toolbar', 'apps.home.apps.HomeConfig')
 

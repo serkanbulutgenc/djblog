@@ -32,7 +32,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-THIRD_PARTY_APPS = ('allauth', 'allauth.account', 'rest_framework', 'django_extensions')
+THIRD_PARTY_APPS = (
+    #'allauth',
+    #'allauth.account',
+    'apps.account',
+    'rest_framework',
+    'django_extensions',
+)
 
 
 MIDDLEWARE = [
@@ -45,7 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
+    #'allauth.account.middleware.AccountMiddleware',
 ]
 
 SITE_ID = 1
@@ -70,6 +76,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# Custom auth settings
+AUTH_USER_MODEL = 'account.User'
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`

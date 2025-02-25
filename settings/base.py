@@ -79,11 +79,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Custom auth settings
 AUTH_USER_MODEL = 'account.User'
 
+LOGOUT_REDIRECT_URL='/'
+
 AUTHENTICATION_BACKENDS = [
+    'apps.account.backends.EmailLoginBackend',
+    'apps.account.backends.PhoneLoginBackend',
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
     # `allauth` specific authentication methods, such as login by email
-    'allauth.account.auth_backends.AuthenticationBackend',
+    #'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 

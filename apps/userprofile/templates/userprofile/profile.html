@@ -2,7 +2,7 @@
 
 <h1>Profile</h1>
 <p>{{user}}</p>
-<form action="{% url 'account:logout'%}" method="POST">
+<form action="{% url 'core:account:logout'%}" method="POST">
     {% csrf_token %}
   <p><button class="btn btn-info" type="submit">Logout</button></p>
 </form>

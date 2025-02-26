@@ -1,12 +1,27 @@
 {%load static%}
 <header class="p-3 mb-3 border-bottom">
   <div class="container">
-    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+    <div
+      class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+    >
+      <a
+        href="/"
+        class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none"
+      >
+        <svg
+          class="bi me-2"
+          width="40"
+          height="32"
+          role="img"
+          aria-label="Bootstrap"
+        >
+          <use xlink:href="#bootstrap"></use>
+        </svg>
       </a>
 
-      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+      <ul
+        class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
+      >
         <li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>
         <li><a href="#" class="nav-link px-2 link-dark">Inventory</a></li>
         <li><a href="#" class="nav-link px-2 link-dark">Customers</a></li>
@@ -14,32 +29,54 @@
       </ul>
 
       <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-        <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+        <input
+          type="search"
+          class="form-control"
+          placeholder="Search..."
+          aria-label="Search"
+        />
       </form>
 
       {% if user.is_authenticated %}
 
       <div class="dropdown text-end">
-        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="{{user.profile.pp.url|default:"default.jpg" }}" alt="mdo" width="32" height="32" class="rounded-circle">
+        <a
+          href="#"
+          class="d-block link-dark text-decoration-none dropdown-toggle"
+          id="dropdownUser1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img src="{{user.profile.pp.url|default:"default.jpg" }}" alt="mdo"
+          width="32" height="32" class="rounded-circle">
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-          <li><a class="dropdown-item" href="{%url 'accounts:profile' %}">Profile</a></li>
-          <li><hr class="dropdown-divider"></li>
           <li>
-          <form action="{% url 'account:logout'%}" method="POST" id="logout-form">
-            {% csrf_token %}
-            <a class="dropdown-item" href="#" id="logout-btn">Sign out</a>
-        </form>
-      </li>
-
-
+            <a class="dropdown-item" href="{%url 'core:userprofile:index' %}"
+              >Profile</a
+            >
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <form
+              action="{% url 'core:account:logout'%}"
+              method="POST"
+              id="logout-form"
+            >
+              {% csrf_token %}
+              <a class="dropdown-item" href="#" id="logout-btn">Sign out</a>
+            </form>
+          </li>
         </ul>
       </div>
       {%else%}
       <div class="col-md-3 text-end">
-        <a class="btn btn-outline-primary me-2" href="{%url 'accounts:login' %}">Login</a>
-        <button type="button" class="btn btn-primary">Sign-up</button>
+        <a
+          class="btn btn-outline-primary me-2"
+          href="{%url 'core:account:login' %}"
+          >Login</a
+        >
+        <a type="button" href="{% url "core:account:signup" %}" class="btn btn-primary">Sign-up</a>
       </div>
       {%endif%}
     </div>
@@ -48,12 +85,11 @@
 
 {%block extra_js%}
 <script>
-  const formEl = document.querySelector('#logout-form')
-  const logoutBtn = document.querySelector('#logout-btn')
+  const formEl = document.querySelector("#logout-form");
+  const logoutBtn = document.querySelector("#logout-btn");
 
-  logoutBtn?.addEventListener('click',(event)=>{
-    formEl.submit()
-  })
-
+  logoutBtn?.addEventListener("click", (event) => {
+    formEl.submit();
+  });
 </script>
 {%endblock extra_js%}

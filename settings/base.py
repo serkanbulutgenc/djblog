@@ -35,7 +35,8 @@ INSTALLED_APPS = [
 THIRD_PARTY_APPS = (
     #'allauth',
     #'allauth.account',
-    'apps.account',
+    'apps.account.apps.AccountConfig',
+    'apps.userprofile.apps.UserprofileConfig',
     'rest_framework',
     'django_extensions',
 )
@@ -78,7 +79,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Custom auth settings
 AUTH_USER_MODEL = 'account.User'
-
+LOGIN_URL ='core:accounts:login'
+LOGIN_REDIRECT_URL='core:userprofile:index'
 LOGOUT_REDIRECT_URL = '/'
 
 AUTHENTICATION_BACKENDS = [

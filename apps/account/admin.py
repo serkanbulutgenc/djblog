@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from apps.account.forms import CustomAdminUserChangeForm, CustomAdminUserCreationForm
-from apps.account.models import Profile
+from apps.userprofile.models import Profile
 
 
 @admin.register(get_user_model())

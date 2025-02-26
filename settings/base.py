@@ -79,8 +79,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Custom auth settings
 AUTH_USER_MODEL = 'account.User'
-LOGIN_URL ='core:accounts:login'
-LOGIN_REDIRECT_URL='core:userprofile:index'
+LOGIN_URL = 'core:accounts:login'
+LOGIN_REDIRECT_URL = 'core:userprofile:index'
 LOGOUT_REDIRECT_URL = '/'
 
 AUTHENTICATION_BACKENDS = [
@@ -145,3 +145,5 @@ MEDIA_ROOT = 'media'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+FORM_RENDERER = 'settings.forms.CustomFormRenderer'

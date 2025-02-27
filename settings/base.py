@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.forms'
 ]
 
 THIRD_PARTY_APPS = (
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
     #'allauth.account.middleware.AccountMiddleware',
 ]
 
@@ -146,4 +148,4 @@ MEDIA_ROOT = 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-FORM_RENDERER = 'settings.forms.CustomFormRenderer'
+FORM_RENDERER = 'config.forms.CustomFormRenderer'

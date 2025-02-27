@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class CustomUserManager(UserManager):
-    def create_user(self, username, email=..., password=..., **extra_fields):
+    def create_user(self, username, email=None, password=None, **extra_fields):
         print(username, email, password, extra_fields)
         return super().create_user(username, email, password, **extra_fields)
 
@@ -30,6 +30,8 @@ class User(AbstractUser):
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = ['email']
     REQUIRED_FIELDS = ['email']
+
+    objects = CustomUserManager()
 
     def __str__(self):
         return f'{self.username}'

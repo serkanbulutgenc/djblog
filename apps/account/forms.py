@@ -1,3 +1,6 @@
+from crispy_bootstrap5.bootstrap5 import FloatingField
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Div, Field, Fieldset, Layout, Submit
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (
@@ -5,8 +8,9 @@ from django.contrib.auth.forms import (
     AuthenticationForm,
     BaseUserCreationForm,
     UserChangeForm,
-    UserCreationForm,
 )
+from django.contrib.auth.forms import PasswordChangeForm as BasePasswordChangeForm
+from django.utils.translation import gettext as _
 
 
 class CustomAdminUserCreationForm(AdminUserCreationForm):
@@ -23,53 +27,89 @@ class CustomAdminUserChangeForm(UserChangeForm):
         # exclude = ('first_name', 'last_name')
 
 
-class CustomUserCreationForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
-        model = get_user_model()
-
-
 class CustomUserLoginForm(AuthenticationForm):
-
-    def __init__(self, request = None, *args, **kwargs):
+    def __init__(self, request=None, *args, **kwargs):
         super().__init__(request, *args, **kwargs)
-        print(self.request)
-        self.fields["username"].widget.attrs["class"] = 'form-control'
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-login-form'
+        self.helper.form_class = 'loginForm'
+        self.helper.form_method = 'post'
+        self.helper.layout = Layout(
+            Fieldset(
+                'Login',
+                FloatingField('username', wrapper_class='wrapper-class'),
+                FloatingField('password'),
+                Div(),
+                Div(
+                    Submit('submit', 'Login', css_class='btn-block'),
+                    css_id='form-actions-area',
+                    css_class='d-grid gap-2',
+                ),
+            )
+        )
 
-    class Meta:
-        widgets = {"username":forms.TextInput(attrs={"class":'form-control', "placeholder":'username or email'})}
+    # class Meta:
+    # super().__init__().Meta()
+    # widgets = {"username":forms.TextInput(attrs={"class":'form-control', "placeholder":'username or email'})}
 
 
 class SignupForm(BaseUserCreationForm):
-    password1 = forms.CharField(
-        label='Password',
-        widget=forms.PasswordInput(attrs={"placeholder":"password", "class":'form-control'}),
+    password1 = forms.CharField(widget=forms.PasswordInput, help_text=None, label=_('password'))
+    is_read = forms.BooleanField(
+        required=True,
+        label='I agree terms & conditions',
+        error_messages={'required': _('You should accept term and conditions before signup.')},
     )
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput(attrs={"class":"form-control","placeholder":"password again"}))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-    
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-signup-form'
+        self.helper.form_class = 'signupForm'
+        self.helper.form_method = 'post'
+        self.helper.layout = Layout(
+            Fieldset(
+                'Signup',
+                FloatingField('username'),
+                FloatingField('phone'),
+                FloatingField('password1'),
+                FloatingField('password2'),
+                Div(Field('is_read')),
+                Div(
+                    Submit('submit', 'Signup', css_class='btn-block'),
+                    css_id='form-actions-area',
+                    css_class='d-grid gap-2',
+                ),
+            )
+        )
 
     class Meta(BaseUserCreationForm.Meta):
         model = get_user_model()
-        fields = BaseUserCreationForm.Meta.fields+ ('phone',)
+        fields = BaseUserCreationForm.Meta.fields + ('phone', 'is_read')
         # field_classes={
         #    "username":forms.CharField
         # }
-        widgets = {'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'username'}) }
-
+        # widgets = {'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'username'}) }
 
     def save(self, commit=True):
+        print('c : ---- : ', self.cleaned_data)
         user = super().save(commit=False)
         user.phone = self.cleaned_data.get('phone', None)
-        user = super().save(commit)
-        print("user:",user)
+        user.save()
         return user
-    
-class TestForm(forms.Form):
-    name = forms.CharField(max_length=100)
-    age = forms.IntegerField(max_value=120, min_value=18, help_text='Age help text')
 
-    class Meta:
-        fields = ['name', 'age']
-        
+
+class PasswordChangeForm(BasePasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'password-change-form'
+        self.helper.layout = Layout(
+            Fieldset(
+                'Change Password',
+                'old_password',
+                'new_password1',
+                'new_password2',
+                Field(Submit('submit', 'Change')),
+            )
+        )

@@ -1,9 +1,21 @@
-{%extends 'base.html'%} {% load static %} {% block content%}
+{%extends 'base.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content%}
+<section class="container py-5">
+  <div class="row">
 
-<form action="{% url 'core:account:signup' %}" method="POST">
-  {% csrf_token %}
-  {{form.nonfield_errors}}
-  {{form}}
-  <button type="submit">Login</button>
+    <div class="col col-md-6 m-md-auto">
+      <div class="card">
+        <div class="card-body">
+          {% crispy form form.helper  %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</section>
+
   {%endblock%}
-</form>

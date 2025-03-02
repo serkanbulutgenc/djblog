@@ -63,6 +63,7 @@ class Profile(models.Model):
         help_text=_('Profile Picture'),
         validators=[FileExtensionValidator(('jpg', 'jpeg', 'png'))],
     )
+    is_verified=models.BooleanField('Is Verified?', default=False, help_text=_('Verified status'), editable=False, blank=True)
     created_at = models.DateTimeField(auto_created=True, auto_now=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 

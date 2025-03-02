@@ -1,15 +1,18 @@
-from crispy_bootstrap5.bootstrap5 import FloatingField
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Div, Field, Fieldset, Layout, Submit
+from crispy_forms.bootstrap import PrependedText
+from crispy_forms.layout import Div, Field, Fieldset, Layout, Submit, HTML, Button,Row
 from django import forms
+from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (
     AdminUserCreationForm,
     AuthenticationForm,
     BaseUserCreationForm,
     UserChangeForm,
+    PasswordResetForm as BasePasswordResetForm ,
+    PasswordChangeForm as BasePasswordChangeForm,
+    SetPasswordForm as BaseSetPasswordForm
 )
-from django.contrib.auth.forms import PasswordChangeForm as BasePasswordChangeForm
 from django.utils.translation import gettext as _
 
 
@@ -19,15 +22,14 @@ class CustomAdminUserCreationForm(AdminUserCreationForm):
         # fields = AdminUserCreationForm.Meta.fields + ('phone',)
         # exclude = ('usable_password')
 
-
 class CustomAdminUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = get_user_model()
         # fields = AdminUserCreationForm.Meta.fields + ('phone',)
         # exclude = ('first_name', 'last_name')
 
-
 class CustomUserLoginForm(AuthenticationForm):
+    #username = forms.CharField(widget=forms.TextInput,max_length=30, label=None, help_text=None)
     def __init__(self, request=None, *args, **kwargs):
         super().__init__(request, *args, **kwargs)
         self.helper = FormHelper()
@@ -36,25 +38,28 @@ class CustomUserLoginForm(AuthenticationForm):
         self.helper.form_method = 'post'
         self.helper.layout = Layout(
             Fieldset(
-                'Login',
-                FloatingField('username', wrapper_class='wrapper-class'),
-                FloatingField('password'),
-                Div(),
-                Div(
-                    Submit('submit', 'Login', css_class='btn-block'),
+                None,
+                PrependedText('username', '@', placeholder="username", wrapper_class=None),
+                PrependedText('password','@' ,placeholder='password', wrapper_class=None),
+
+                Row(
+                    Div(Submit('submit', 'Login', css_class='px-4'),css_class='col-6'),
+                    Div(HTML(f'<a href="{reverse_lazy('core:account:password_reset')}" class="btn btn-link px-0">Forgot Password</a>'), css_class='col-6 text-end'),                    
                     css_id='form-actions-area',
-                    css_class='d-grid gap-2',
                 ),
             )
         )
 
-    # class Meta:
+    #class Meta:
+    #    fields=('username', 'password')
     # super().__init__().Meta()
     # widgets = {"username":forms.TextInput(attrs={"class":'form-control', "placeholder":'username or email'})}
 
-
 class SignupForm(BaseUserCreationForm):
+    username=forms.CharField(label=None)
     password1 = forms.CharField(widget=forms.PasswordInput, help_text=None, label=_('password'))
+    password2 =None
+    email=forms.EmailField(widget=forms.EmailInput, required=True, help_text=None, label=_('Email'))
     is_read = forms.BooleanField(
         required=True,
         label='I agree terms & conditions',
@@ -69,14 +74,13 @@ class SignupForm(BaseUserCreationForm):
         self.helper.form_method = 'post'
         self.helper.layout = Layout(
             Fieldset(
-                'Signup',
-                FloatingField('username'),
-                FloatingField('phone'),
-                FloatingField('password1'),
-                FloatingField('password2'),
+                None,
+                PrependedText('username','@',css_class='form-control-sm'),
+                PrependedText('email', '@',css_class='form-control-sm'),
+                PrependedText('password1','*', css_class='form-control-sm'),
                 Div(Field('is_read')),
-                Div(
-                    Submit('submit', 'Signup', css_class='btn-block'),
+                Row(
+                    Submit('submit', 'Signup', css_class='btn-block btn-success'),
                     css_id='form-actions-area',
                     css_class='d-grid gap-2',
                 ),
@@ -85,7 +89,7 @@ class SignupForm(BaseUserCreationForm):
 
     class Meta(BaseUserCreationForm.Meta):
         model = get_user_model()
-        fields = BaseUserCreationForm.Meta.fields + ('phone', 'is_read')
+        fields = BaseUserCreationForm.Meta.fields + ('email', 'is_read')
         # field_classes={
         #    "username":forms.CharField
         # }
@@ -98,7 +102,6 @@ class SignupForm(BaseUserCreationForm):
         user.save()
         return user
 
-
 class PasswordChangeForm(BasePasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -110,6 +113,48 @@ class PasswordChangeForm(BasePasswordChangeForm):
                 'old_password',
                 'new_password1',
                 'new_password2',
-                Field(Submit('submit', 'Change')),
+                Div(
+                    Submit('submit', 'Login', css_class='btn-block'),
+                    css_id='form-actions-area',
+                    css_class='d-grid gap-2',
+                ),
             )
         )
+
+class PasswordResetForm(BasePasswordResetForm):
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class='password-reset-form'
+        self.helper.form_id='password-reset-form-id'
+        self.helper.layout = Layout(
+            Fieldset(
+                None,
+                'email',
+               
+                Div(
+                    Submit('submit', 'Send', css_class='btn-block'),
+                    css_id='form-actions-area',
+                    css_class='d-grid gap-2',
+                ),
+            )
+        )
+        
+class SetPasswordForm(BaseSetPasswordForm):
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'password-reset-form-class'
+        self.helper.form_id = 'password-reset-form-id'
+        self.helper.layout = Layout(
+            'Reset Password',
+            'new_password1',
+            'new_password2',
+            Div(
+                Submit('submit', 'Set Password'),
+                css_class='btn btn-primary'
+            )
+        )
+    

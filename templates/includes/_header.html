@@ -1,5 +1,5 @@
 {%load static%}
-<header class="p-3 mb-3 border-bottom">
+<header class="p-2 border-bottom">
   <div class="container">
     <div
       class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
@@ -25,7 +25,6 @@
         <li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>
         <li><a href="#" class="nav-link px-2 link-dark">Inventory</a></li>
         <li><a href="#" class="nav-link px-2 link-dark">Customers</a></li>
-        <li><a href="#" class="nav-link px-2 link-dark">Products</a></li>
       </ul>
 
       <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -38,58 +37,77 @@
       </form>
 
       {% if user.is_authenticated %}
-
       <div class="dropdown text-end">
         <a
           href="#"
-          class="d-block link-dark text-decoration-none dropdown-toggle"
-          id="dropdownUser1"
+          class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          <img src="{{user.profile.pp.url|default:"default.jpg" }}" alt="mdo"
-          width="32" height="32" class="rounded-circle">
+          <img
+            src="{{user.profile.pp.url|default:'default.jpg'}}"
+            alt="{{user.username}}"
+            width="32"
+            height="32"
+            class="rounded-circle"
+          />
         </a>
-        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+        <ul class="dropdown-menu text-small dropdown-menu-end">
           <li>
-            <a class="dropdown-item" href="{%url 'core:userprofile:index' %}"
+            <a class="dropdown-item" href="{% url 'core:dashboard:profile' %}"
               >Profile</a
             >
           </li>
-          <li><hr class="dropdown-divider" /></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
           <li>
             <form
               action="{% url 'core:account:logout'%}"
               method="POST"
               id="logout-form"
             >
-              {% csrf_token %}
-              <a class="dropdown-item" href="#" id="logout-btn">Sign out</a>
+              {% csrf_token %}<a class="dropdown-item" href="#" id="logout-link"
+                >Sign out</a
+              >
             </form>
           </li>
         </ul>
-      </div>
-      {%else%}
-      <div class="col-md-3 text-end">
+
+        {% else %}
+
         <a
-          class="btn btn-outline-primary me-2"
-          href="{%url 'core:account:login' %}"
-          >Login</a
+          class="btn btn-lg border-0" 
+          href="#"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
         >
-        <a type="button" href="{% url "core:account:signup" %}" class="btn btn-primary">Sign-up</a>
+
+          <i class="bi bi-person-circle"></i>
+        </a>
+
+        <ul class="dropdown-menu text-small dropdown-menu-end">
+          <li><a class="dropdown-item" href="{% url 'core:account:login' %}">Login</a></li>
+          <li>
+            <a class="dropdown-item" href="{% url 'core:account:signup' %}">Register</a>
+          </li>
+        </ul>
       </div>
+
       {%endif%}
     </div>
   </div>
 </header>
 
-{%block extra_js%}
+{%block extrajs%}
 <script>
   const formEl = document.querySelector("#logout-form");
-  const logoutBtn = document.querySelector("#logout-btn");
+  const logoutLink = document.querySelector("#logout-link");
 
-  logoutBtn?.addEventListener("click", (event) => {
+  logoutLink?.addEventListener("click", (event) => {
+    event.preventDefault();
     formEl.submit();
   });
 </script>
-{%endblock extra_js%}
+{%endblock extrajs%}

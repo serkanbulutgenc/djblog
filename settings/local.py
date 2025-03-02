@@ -23,6 +23,6 @@ CACHES = {
     )
 }
 
-THIRD_PARTY_APPS += ('debug_toolbar', 'apps.home.apps.HomeConfig')
+THIRD_PARTY_APPS += ('debug_toolbar', 'apps.home.apps.HomeConfig', 'apps.dashboard.apps.DashboardConfig')
 
 INSTALLED_APPS += THIRD_PARTY_APPS

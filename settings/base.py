@@ -82,9 +82,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Custom auth settings
 AUTH_USER_MODEL = 'account.User'
-LOGIN_URL = 'core:accounts:login'
+LOGIN_URL = 'core:account:login'
 LOGIN_REDIRECT_URL = 'core:userprofile:index'
 LOGOUT_REDIRECT_URL = '/'
+
+#Email 
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 
 AUTHENTICATION_BACKENDS = [
     'apps.account.backends.EmailLoginBackend',
@@ -128,10 +132,7 @@ USE_TZ = True
 
 STORAGES = {
     'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
-    #'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'},
-    'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
-    },
+    'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'},
 }
 
 

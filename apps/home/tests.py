@@ -8,10 +8,10 @@ class HomeAppTest(TestCase):
         self.test_var = 'John'
 
     def test_homeview_response(self):
-        res = self.client.get(reverse('home:index'))
+        res = self.client.get(reverse('core:home:index'))
 
         self.assertEqual(res.status_code, 200)
 
-        self.assertContains(res, 'Home')
+        self.assertContains(res, 'hero')
 
         self.assertTemplateUsed(res, 'home/index.html')

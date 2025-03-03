@@ -83,11 +83,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Custom auth settings
 AUTH_USER_MODEL = 'account.User'
 LOGIN_URL = 'core:account:login'
-LOGIN_REDIRECT_URL = 'core:userprofile:index'
+LOGIN_REDIRECT_URL = 'core:dashboard:profile'
 LOGOUT_REDIRECT_URL = '/'
 
-#Email 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 AUTHENTICATION_BACKENDS = [

@@ -1,5 +1,8 @@
 from django.apps import AppConfig
 
+# from django.db.models.signals import post_save
+# from apps.account.signals import create_profile
+
 
 class AccountConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'

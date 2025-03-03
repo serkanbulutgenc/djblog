@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractUser, UserManager, BaseUserManager
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.core.validators import (
     MaxLengthValidator,
     MinLengthValidator,
@@ -11,14 +11,14 @@ from django.utils.translation import gettext_lazy as _
 
 class CustomUserManager(UserManager):
     def create_user(self, username, email=None, password=None, **extra_fields):
-        print("createUser:", username, email, password, extra_fields)
-        return super().create_user(username, email,password, **extra_fields)
+        print('createUser:', username, email, password, extra_fields)
+        return super().create_user(username, email, password, **extra_fields)
 
 
 class User(AbstractUser):
     first_name = None
     last_name = None
-    email = models.EmailField(_("email address"),unique=True, blank=False, null=False )
+    email = models.EmailField(_('email address'), unique=True, blank=False, null=False)
     phone = models.CharField(
         _('Phone Number'),
         max_length=10,
@@ -37,5 +37,3 @@ class User(AbstractUser):
 
     def __str__(self):
         return f'{self.username}'
-
-

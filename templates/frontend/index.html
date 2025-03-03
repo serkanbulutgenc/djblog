@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% include 'includes/_header.html' %}
+
+
+{% if messages %}
+<div class="container my-3">
+
+    {% for message in messages %}
+    <div class="alert alert-dismissible fade show {% if message.tags %} alert-{{ message.tags }} {% endif %}"
+        role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+
+{% endif %}
+
+<main id="site-main-area" class=" ">
+
+
+    {% block content %}
+
+    {% endblock content %}
+
+
+</main>
+
+{%include 'includes/_footer.html' %}
+
+{% endblock body %}

@@ -24,6 +24,8 @@ CACHES = {
     'default': env.cache_url('REDIS_URL')
 }
 
+STORAGES['staticfiles'] = {'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage'}
+
 
 THIRD_PARTY_APPS += ('apps.home.apps.HomeConfig',)
 

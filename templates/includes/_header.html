@@ -1,16 +1,113 @@
-<div class="container">
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-        <span class="fs-4">Foo</span>
+{%load static%}
+<header class="p-2 border-bottom">
+  <div class="container">
+    <div
+      class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+    >
+      <a
+        href="/"
+        class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none"
+      >
+        <svg
+          class="bi me-2"
+          width="40"
+          height="32"
+          role="img"
+          aria-label="Bootstrap"
+        >
+          <use xlink:href="#bootstrap"></use>
+        </svg>
       </a>
 
-      <ul class="nav nav-pills">
-        <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">About</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+      <ul
+        class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
+      >
+        <li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">Inventory</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">Customers</a></li>
       </ul>
-    </header>
+
+      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+        <input
+          type="search"
+          class="form-control"
+          placeholder="Search..."
+          aria-label="Search"
+        />
+      </form>
+
+      {% if user.is_authenticated %}
+      <div class="dropdown text-end">
+        <a
+          href="#"
+          class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            src="{{user.profile.pp.url|default:'default.jpg'}}"
+            alt="{{user.username}}"
+            width="32"
+            height="32"
+            class="rounded-circle"
+          />
+        </a>
+        <ul class="dropdown-menu text-small dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" href="{% url 'core:dashboard:profile' %}"
+              >Profile</a
+            >
+          </li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <li>
+            <form
+              action="{% url 'core:account:logout'%}"
+              method="POST"
+              id="logout-form"
+            >
+              {% csrf_token %}<a class="dropdown-item" href="#" id="logout-link"
+                >Sign out</a
+              >
+            </form>
+          </li>
+        </ul>
+
+        {% else %}
+
+        <a
+          class="btn btn-lg border-0" 
+          href="#"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+
+          <i class="bi bi-person-circle"></i>
+        </a>
+
+        <ul class="dropdown-menu text-small dropdown-menu-end">
+          <li><a class="dropdown-item" href="{% url 'core:account:login' %}">Login</a></li>
+          <li>
+            <a class="dropdown-item" href="{% url 'core:account:signup' %}">Register</a>
+          </li>
+        </ul>
+      </div>
+
+      {%endif%}
+    </div>
   </div>
+</header>
+
+{%block extrajs%}
+<script>
+  const formEl = document.querySelector("#logout-form");
+  const logoutLink = document.querySelector("#logout-link");
+
+  logoutLink?.addEventListener("click", (event) => {
+    event.preventDefault();
+    formEl.submit();
+  });
+</script>
+{%endblock extrajs%}

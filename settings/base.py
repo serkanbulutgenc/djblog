@@ -30,9 +30,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.forms',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
-THIRD_PARTY_APPS = ('allauth', 'allauth.account', 'rest_framework', 'django_extensions')
+THIRD_PARTY_APPS = (
+    #'allauth',
+    #'allauth.account',
+    'apps.account.apps.AccountConfig',
+    'apps.userprofile.apps.UserprofileConfig',
+    'rest_framework',
+    'django_extensions',
+)
 
 
 MIDDLEWARE = [
@@ -45,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
+    #'allauth.account.middleware.AccountMiddleware',
 ]
 
 SITE_ID = 1
@@ -70,12 +80,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# Custom auth settings
+AUTH_USER_MODEL = 'account.User'
+LOGIN_URL = 'core:account:login'
+LOGIN_REDIRECT_URL = 'core:dashboard:profile'
+LOGOUT_REDIRECT_URL = '/'
+
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 AUTHENTICATION_BACKENDS = [
+    'apps.account.backends.EmailLoginBackend',
+    'apps.account.backends.PhoneLoginBackend',
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
     # `allauth` specific authentication methods, such as login by email
-    'allauth.account.auth_backends.AuthenticationBackend',
+    #'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 
@@ -110,11 +131,8 @@ USE_I18N = True
 USE_TZ = True
 
 STORAGES = {
-    'default': {'BACKEND': 'django.core.files.storage.FilesystemStorage'},
-    #'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'},
-    'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
-    },
+    'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
+    'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'},
 }
 
 
@@ -131,3 +149,9 @@ MEDIA_ROOT = 'media'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# FORM_RENDERER = 'config.forms.CustomFormRenderer'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

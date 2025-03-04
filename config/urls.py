@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('apps.core.urls', namespace='core')),
     # path('accounts/', include('apps.account.urls', namespace='account')),
+    path('accounts/', include('allauth.urls')),
 ]
 
 if settings.DEBUG:

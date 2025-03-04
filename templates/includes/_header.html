@@ -64,7 +64,7 @@
           </li>
           <li>
             <form
-              action="{% url 'core:account:logout'%}"
+              action="{% url 'account_logout'%}"
               method="POST"
               id="logout-form"
             >
@@ -78,7 +78,7 @@
         {% else %}
 
         <a
-          class="btn btn-lg border-0" 
+          class="btn btn-lg border-0"
           href="#"
           data-bs-toggle="dropdown"
           aria-expanded="false"
@@ -88,9 +88,9 @@
         </a>
 
         <ul class="dropdown-menu text-small dropdown-menu-end">
-          <li><a class="dropdown-item" href="{% url 'core:account:login' %}">Login</a></li>
+          <li><a class="dropdown-item" href="{% url 'account_login' %}">Login</a></li>
           <li>
-            <a class="dropdown-item" href="{% url 'core:account:signup' %}">Register</a>
+            <a class="dropdown-item" href="{% url 'account_signup' %}">Register</a>
           </li>
         </ul>
       </div>

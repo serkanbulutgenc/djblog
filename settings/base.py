@@ -36,9 +36,9 @@ INSTALLED_APPS = [
 ]
 
 THIRD_PARTY_APPS = (
-    #'allauth',
-    #'allauth.account',
-    'apps.account.apps.AccountConfig',
+    'allauth',
+    'allauth.account',
+    #'apps.account.apps.AccountConfig',
     'apps.userprofile.apps.UserprofileConfig',
     'rest_framework',
     'django_extensions',
@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'allauth.account.middleware.AccountMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 SITE_ID = 1
@@ -81,9 +81,23 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # Custom auth settings
-AUTH_USER_MODEL = 'account.User'
-LOGIN_URL = 'core:account:login'
-LOGIN_REDIRECT_URL = 'core:dashboard:profile'
+# AUTH_USER_MODEL = 'account.User'
+ACCOUNT_RATE_LIMITS = False
+ACCOUNT_CHANGE_EMAIL = False
+ACCOUNT_EMAIL_NOTIFICATIONS = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_NOTIFICATIONS = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = True
+ACCOUNT_MAX_EMAIL_ADDRESSES = 3
+ACCOUNT_LOGIN_METHODS = {'username', 'email'}
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = False
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_USERNAME_BLACKLIST = ['admin', 'user', 'password', 'root', 'superuser', 'superadmin']
+ACCOUNT_USERNAME_MIN_LENGTH = 3
+
+# LOGIN_URL = 'core:account:login'
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 # Email
@@ -91,12 +105,12 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 AUTHENTICATION_BACKENDS = [
-    'apps.account.backends.EmailLoginBackend',
-    'apps.account.backends.PhoneLoginBackend',
+    #'apps.account.backends.EmailLoginBackend',
+    #'apps.account.backends.PhoneLoginBackend',
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
     # `allauth` specific authentication methods, such as login by email
-    #'allauth.account.auth_backends.AuthenticationBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 

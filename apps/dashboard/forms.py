@@ -1,10 +1,4 @@
-from crispy_forms import helper
-from crispy_forms.layout import Column, Field, Fieldset, Layout, Row
-from django import forms
-
-from apps.userprofile.models import Profile
-
-
+'''
 class ProfileForm(forms.ModelForm):
     """Form definition for Profile."""
 
@@ -28,3 +22,4 @@ class ProfileForm(forms.ModelForm):
 
         model = Profile
         fields = ('first_name', 'last_name', 'bio')
+'''

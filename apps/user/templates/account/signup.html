@@ -1,7 +1,6 @@
 {%extends 'frontend/index.html'%}
-
+{% load crispy_forms_tags %}
 {% load static %}
-
 {% block content%}
 <section class="min-vh-100 d-flex flex-row pt-5">
   <div class="container">
@@ -9,11 +8,9 @@
       <div class="col-md-6">
         <div class="card mb-4 mx-4">
           <div class="card-body p-4">
-            <h1 class="text-center">Success</h1>
-            <p class="text-body-secondary text-center">Your password has been resetted succesfully.</p>
-            <p class="text-body-secondary text-center">
-              <a href="{% url 'core:account:login' %}" class="btn btn-link">Login</a>
-            </p>            
+            <h1 class="text-center">Register</h1>
+            <p class="text-body-secondary text-center">Create your account</p>
+            {% crispy form form.helper  %}
 
           </div>
         </div>
@@ -21,4 +18,4 @@
     </div>
   </div>
 </section>
-{%endblock%}
+  {%endblock content%}

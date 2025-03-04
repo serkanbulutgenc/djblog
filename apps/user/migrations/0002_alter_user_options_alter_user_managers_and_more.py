@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('account', '0001_initial'),
     ]
@@ -16,8 +15,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterModelManagers(
             name='user',
-            managers=[
-            ],
+            managers=[],
         ),
         migrations.RemoveField(
             model_name='user',
@@ -50,7 +48,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='is_verified',
-            field=models.BooleanField(default=False, help_text='Is Verified?', verbose_name='is_verified'),
+            field=models.BooleanField(
+                default=False, help_text='Is Verified?', verbose_name='is_verified'
+            ),
         ),
         migrations.AddField(
             model_name='user',
@@ -66,11 +66,15 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='first_name',
-            field=models.CharField(help_text='First name', max_length=50, verbose_name='first_name'),
+            field=models.CharField(
+                help_text='First name', max_length=50, verbose_name='first_name'
+            ),
         ),
         migrations.AlterField(
             model_name='user',
             name='username',
-            field=models.CharField(help_text='Username', max_length=30, unique=True, verbose_name='username'),
+            field=models.CharField(
+                help_text='Username', max_length=30, unique=True, verbose_name='username'
+            ),
         ),
     ]

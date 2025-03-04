@@ -5,9 +5,8 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('account', '0011_alter_user_managers'),
+        ('user', '0011_alter_user_managers'),
     ]
 
     operations = [
@@ -19,6 +18,17 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='phone',
-            field=models.CharField(blank=True, help_text='Phone Number', max_length=10, null=True, unique=True, validators=[django.core.validators.MinLengthValidator(7), django.core.validators.MaxLengthValidator(10)], verbose_name='Phone Number'),
+            field=models.CharField(
+                blank=True,
+                help_text='Phone Number',
+                max_length=10,
+                null=True,
+                unique=True,
+                validators=[
+                    django.core.validators.MinLengthValidator(7),
+                    django.core.validators.MaxLengthValidator(10),
+                ],
+                verbose_name='Phone Number',
+            ),
         ),
     ]

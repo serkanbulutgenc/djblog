@@ -4,9 +4,8 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('account', '0009_rename_user_profile_owner'),
+        ('user', '0009_rename_user_profile_owner'),
     ]
 
     operations = [

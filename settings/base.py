@@ -38,7 +38,7 @@ INSTALLED_APPS = [
 THIRD_PARTY_APPS = (
     'allauth',
     'allauth.account',
-    #'apps.account.apps.AccountConfig',
+    'apps.user.apps.UserConfig',
     'apps.userprofile.apps.UserprofileConfig',
     'rest_framework',
     'django_extensions',
@@ -81,7 +81,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # Custom auth settings
-# AUTH_USER_MODEL = 'account.User'
+AUTH_USER_MODEL = 'user.User'
 ACCOUNT_RATE_LIMITS = False
 ACCOUNT_CHANGE_EMAIL = False
 ACCOUNT_EMAIL_NOTIFICATIONS = True

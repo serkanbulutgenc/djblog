@@ -4,8 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from apps.account.forms import CustomAdminUserChangeForm, CustomAdminUserCreationForm
-from apps.userprofile.models import Profile
+from apps.user.forms import CustomAdminUserChangeForm, CustomAdminUserCreationForm
 
 
 @admin.register(get_user_model())
@@ -61,10 +60,3 @@ class UserAdmin(BaseUserAdmin):
     # filter_vertical=['groups', 'user_permissions']
     # list_editable=('is_staff',)
     search_fields = ('username',)
-
-
-@admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['first_name', 'last_name', 'owner']
-    empty_value_display = '-empty-'
-    autocomplete_fields = ['owner']

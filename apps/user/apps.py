@@ -4,9 +4,9 @@ from django.apps import AppConfig
 # from apps.account.signals import create_profile
 
 
-class AccountConfig(AppConfig):
+class UserConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'apps.account'
+    name = 'apps.user'
 
     def ready(self):
         # Implicitly connect signal handlers decorated with @receiver.
